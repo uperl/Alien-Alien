@@ -17,7 +17,6 @@ $modules{$_} = $_ for qw(
   IPC::Cmd
   Test2::V0
   Test::Alien
-  Test::More
 );
 
 $post_diag = sub {
