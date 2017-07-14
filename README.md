@@ -15,8 +15,8 @@ Find or use alien package conversion tool
 
 This [Alien](https://metacpan.org/pod/Alien) module provides the `alien` tool that converts between different
 Linux package formats.  Reading this documentation, and seeing the name, you may
-feel as though you are looking through the looking glass.  This distribution is
-not _entirely_ a joke, though it is somewhat to gongue in cheek.  One of the useful
+feel as though you are glancing through the looking glass.  This distribution is
+not _entirely_ a joke, though it is somewhat to tongue in cheek.  One of the useful
 things that this module provides is some interesting challenges in the [Alien](https://metacpan.org/pod/Alien)
 space.  That includes
 

@@ -21,8 +21,8 @@ use base qw( Alien::Base );
 
 This L<Alien> module provides the C<alien> tool that converts between different
 Linux package formats.  Reading this documentation, and seeing the name, you may
-feel as though you are looking through the looking glass.  This distribution is
-not I<entirely> a joke, though it is somewhat to gongue in cheek.  One of the useful
+feel as though you are glancing through the looking glass.  This distribution is
+not I<entirely> a joke, though it is somewhat to tongue in cheek.  One of the useful
 things that this module provides is some interesting challenges in the L<Alien>
 space.  That includes
 
