@@ -1,0 +1,67 @@
+use alienfile;
+use Path::Tiny qw( path );
+
+plugin 'Probe::CommandLine' => (
+  command => 'alien',
+  args    => [ '--version' ],
+  match   => qr/alien version/,
+  version => qr/alien version ([0-9\.]+)/,
+);
+
+share {
+
+  plugin 'Download' => (
+    url => 'https://sourceforge.net/projects/alien-pkg-convert/files/release/',
+    filter => qr/^alien/,
+    version => qr/([0-9\.]+)/,
+  );
+
+  meta->around_hook(
+    decode => sub {
+      my($orig, $build, $res) = @_;
+      
+      my $ret = $orig->($build, $res);
+     
+      if($ret->{type} eq 'list')
+      {
+        @{ $ret->{list} } = map { $_->{url} =~ m{/([^/]+)/download$} ? { filename => $1, url => $_->{url} } : $_  } @{ $ret->{list} };
+      }
+      
+      $ret;
+    },
+  );
+  
+  extract [
+    'tar xf %{.install.download}',
+  ];
+
+  patch sub {
+    my $fix = "use File::Basename ();\nuse File::Spec;\nuse  lib File::Spec->catdir(File::Basename::dirname(File::Spec->rel2abs(__FILE__)),qw( .. lib perl5 ));\n";
+    my $alien_pl = path('alien.pl');
+    my($shebang, @rest) = $alien_pl->lines_utf8;
+    $alien_pl->spew_utf8($shebang, $fix, @rest);
+  };
+
+  meta->around_hook(
+    build => sub {
+      my($orig, $build) = @_;
+    
+      my $prefix = $build->install_prop->{prefix};
+    
+      local $ENV{PERL_LOCAL_LIB_ROOT} = $prefix;
+      local $ENV{PERL_MM_OPT}         = "INSTALL_BASE=$prefix";
+      
+      $orig->($build);
+    
+    },
+  );
+  
+  build [
+    'mkdir -p lib',
+    'mv Alien lib',
+    '%{perl} Makefile.PL',
+    '%{make}',
+    '%{make} install',
+  ];
+
+};

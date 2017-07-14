@@ -1,6 +1,16 @@
 use Test2::V0;
+use Test::Alien;
 use Alien::Alien;
 
-ok 1, 'todo';
+alien_ok 'Alien::Alien';
 
-done_testing
+my $run = run_ok(['alien', '--version'])
+  ->success
+  ->note;
+
+if($run->exit)
+{ $run->diag }
+else
+{ $run->note }
+
+done_testing;
