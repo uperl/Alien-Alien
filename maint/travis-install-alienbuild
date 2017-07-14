@@ -13,7 +13,7 @@ dzil authordeps --missing | cpanm -n
 dzil listdeps   --missing | cpanm -n
 dzil install --install-command 'cpanm -n -v .'
 
-git clone --depth 2 git@github.com:plicease/Alien-Build-Plugin-Decode-SourceForge.git /tmp/Alien-Build-Plugin-Decode-SourceForge
+git clone --depth 2 https://github.com/plicease/Alien-Build-Plugin-Decode-SourceForge.git /tmp/Alien-Build-Plugin-Decode-SourceForge
 cd /tmp/Alien-Build-Plugin-Decode-SourceForge
 dzil authordeps --missing | cpanm -n
 dzil listdeps   --missing | cpanm -n
