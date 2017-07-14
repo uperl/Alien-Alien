@@ -1,6 +1,11 @@
 language: perl
 sudo: false
 
+addons:
+  apt:
+    packages:
+      - alien
+
 install:
   - perlbrew list
   - cpanm -n App::af
