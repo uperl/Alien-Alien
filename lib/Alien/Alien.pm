@@ -8,4 +8,72 @@ use base qw( Alien::Base );
 # ABSTRACT: Find or use alien package conversion tool
 # VERSION
 
+=head1 SYNOPSIS
+
+ use Alien::Alien;
+ use Env qw( @PATH );
+ 
+ unshift @ENV, Alien::Alien->bin_dir;
+ 
+ system "alien --to-rpm --scripts ./mkpkg.deb";
+
+=head1 DESCRIPTION
+
+This L<Alien> module provides the C<alien> tool that converts between different
+Linux package formats.  Reading this documentation, and seeing the name, you may
+feel as though you are looking through the looking glass.  This distribution is
+not I<entirely> a joke, though it is somewhat to gongue in cheek.  One of the useful
+things that this module provides is some interesting challenges in the L<Alien>
+space.  That includes
+
+=over 4
+
+=item Tool is implemented as Perl
+
+C<alien> is implemented in Perl, and distributed as a standard CPAN style distribution,
+but isn't available ON CPAN.
+
+=item Project is hosted on SourceForge
+
+This module drove development of L<Alien::Build::Plugin::Decode::SourceForge>, which I
+expect will be useful for other Aliens.
+
+=item Tool is architecture independent
+
+Aliens using L<Alien::Build> are usually installed in the architecture specific library
+location, because they I<usually> are architecture specific.  Since this tool is Perl,
+it is architecture independent, so we install it in the regular architecture independent
+library location.
+
+=item Project is distributed as a tar.xz file.
+
+This is an added complication and sort of a hassle for a few bytes saved.  Thanks!
+
+=back
+
+=head1 METHODS
+
+=head2 bin_dir
+
+ my @dirs = Alien::Alien->bin_dir;
+
+Returns the list of directories that need to be added to the PATH in order for C<alien>
+to work.  This may be an empty list (as for a system install).
+
+=head1 SEE ALSO
+
+=over 4
+
+=item L<Alien>
+
+=item L<alienfile>
+
+=item L<Alien::Build>
+
+=item L<Alien::Base>
+
+=back
+
+=cut
+
 1;

@@ -1,5 +1,8 @@
 use alienfile;
+use Env qw( @PATH );
 use Path::Tiny qw( path );
+
+meta->prop->{arch} = 0;
 
 plugin 'Probe::CommandLine' => (
   command => 'alien',
@@ -17,10 +20,26 @@ share {
   );
   
   plugin 'Decode::SourceForge';
-  
+
+  # TODO: make extraction for .tar.xz more reliable
+  #requires 'Alien::xz';
+  #plugin 'Extract' => (
+  #  format => 'tar.xz',
+  #);
+
   extract [
     'tar xf %{.install.download}',
   ];
+  
+  meta->around_hook(
+    around => sub {
+      my($orig, @rest) = @_;
+      
+      unshift @PATH, Alien::xz->bin_dir;
+      
+      $orig->(@rest);
+    },
+  );
 
   patch sub {
     my $fix = "use File::Basename ();\nuse File::Spec;\nuse  lib File::Spec->catdir(File::Basename::dirname(File::Spec->rel2abs(__FILE__)),qw( .. lib perl5 ));\n";
