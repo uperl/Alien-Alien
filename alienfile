@@ -15,21 +15,8 @@ share {
     filter => qr/^alien/,
     version => qr/([0-9\.]+)/,
   );
-
-  meta->around_hook(
-    decode => sub {
-      my($orig, $build, $res) = @_;
-      
-      my $ret = $orig->($build, $res);
-     
-      if($ret->{type} eq 'list')
-      {
-        @{ $ret->{list} } = map { $_->{url} =~ m{/([^/]+)/download$} ? { filename => $1, url => $_->{url} } : $_  } @{ $ret->{list} };
-      }
-      
-      $ret;
-    },
-  );
+  
+  plugin 'Decode::SourceForge';
   
   extract [
     'tar xf %{.install.download}',
