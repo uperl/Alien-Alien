@@ -21,16 +21,10 @@ share {
   
   plugin 'Decode::SourceForge';
 
-  # TODO: make extraction for .tar.xz more reliable
-  #requires 'Alien::xz';
-  #plugin 'Extract' => (
-  #  format => 'tar.xz',
-  #);
+  plugin 'Extract' => (
+    format => 'tar.xz',
+  );
 
-  extract [
-    'tar xf %{.install.download}',
-  ];
-  
   meta->around_hook(
     around => sub {
       my($orig, @rest) = @_;
