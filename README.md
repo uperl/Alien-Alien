@@ -1,15 +1,17 @@
-# Alien::Alien [![Build Status](https://secure.travis-ci.org/plicease/Alien-Alien.png)](http://travis-ci.org/plicease/Alien-Alien)
+# Alien::Alien ![linux](https://github.com/plicease/Alien-Alien/workflows/linux/badge.svg)
 
 Find or use alien package conversion tool
 
 # SYNOPSIS
 
-    use Alien::Alien;
-    use Env qw( @PATH );
-    
-    unshift @ENV, Alien::Alien->bin_dir;
-    
-    system "alien --to-rpm --scripts ./mkpkg.deb";
+```perl
+use Alien::Alien;
+use Env qw( @PATH );
+
+unshift @ENV, Alien::Alien->bin_dir;
+
+system "alien --to-rpm --scripts ./mkpkg.deb";
+```
 
 # DESCRIPTION
 
@@ -45,7 +47,9 @@ space.  That includes
 
 ## bin\_dir
 
-    my @dirs = Alien::Alien->bin_dir;
+```perl
+my @dirs = Alien::Alien->bin_dir;
+```
 
 Returns the list of directories that need to be added to the PATH in order for `alien`
 to work.  This may be an empty list (as for a system install).
