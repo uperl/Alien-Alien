@@ -18,7 +18,7 @@ share {
     filter => qr/^alien/,
     version => qr/([0-9\.]+)/,
   );
-  
+
   plugin 'Decode::SourceForge';
 
   plugin 'Extract' => (
@@ -28,9 +28,9 @@ share {
   meta->around_hook(
     around => sub {
       my($orig, @rest) = @_;
-      
+
       unshift @PATH, Alien::xz->bin_dir;
-      
+
       $orig->(@rest);
     },
   );
@@ -45,17 +45,17 @@ share {
   meta->around_hook(
     build => sub {
       my($orig, $build) = @_;
-    
+
       my $prefix = $build->install_prop->{prefix};
-    
+
       local $ENV{PERL_LOCAL_LIB_ROOT} = $prefix;
       local $ENV{PERL_MM_OPT}         = "INSTALL_BASE=$prefix";
-      
+
       $orig->($build);
-    
+
     },
   );
-  
+
   build [
     'mkdir -p lib',
     'mv Alien lib',
